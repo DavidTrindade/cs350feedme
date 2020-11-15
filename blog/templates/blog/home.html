@@ -1,0 +1,19 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+
+    <h1>Home Page</h1>
+
+    {% for feed in feeds %}
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2" href="#">{{ feed.link }}</a>
+                </div>
+                <h2><a class="article-title" href="#">{{ feed.title }}</a></h2>
+                <p class="article-content">{{ feed.desc }}</p>
+            </div>
+        </article>
+    {% endfor %}
+
+{% endblock %}
