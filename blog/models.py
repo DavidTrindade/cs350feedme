@@ -9,5 +9,6 @@ class Feed(models.Model):
 
 class Article(models.Model):
     feed = models.ForeignKey(Feed, on_delete=models.CASCADE)
+    link = models.CharField(max_length=2000)
     title = models.TextField()
     desc = models.TextField()
