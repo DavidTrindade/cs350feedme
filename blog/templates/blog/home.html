@@ -1,38 +1,21 @@
-{% extends "blog/base.html" %}
+{% extends "blog/display_feed.html" %}
 
-{% block content %}
+{% block title %}Home Page{% endblock %}
 
-    <h1>Home Page</h1>
-
-    {% for feed in feeds %}
-        <article class="media content-section">
-            <div class="media-body">
-                <div class="article-metadata">
-                    <a class="mr-2" href="{{ feed.link }}">{{ feed.link }}</a>
-                </div>
-                <div id="title-section">
-                    {% if user.is_authenticated %}
-                        <div id="fav-section">
-                            {% if feed in favs %}
-                                <form action="{% url 'fav' feed.id %}" method="POST">
-                                    {% csrf_token %}
-                                    <button name="feed_id" value="{{ feed.id }}" type="submit" class="fas fa-heart fa-2x" style="float:right"></button>
-                                </form>
-                            {% else %}
-                                <form action="{% url 'fav' feed.id %}" method="POST">
-                                    {% csrf_token %}
-                                    <button name="feed_id" value="{{ feed.id }}" type="submit" class="far fa-heart fa-2x" style="float:right"></button>
-                                </form>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                    <h2><a class="article-title" href="#">{{ feed.title }}</a></h2>
-                </div>
-                
-                <p class="article-content">{{ feed.desc }}</p>
-
-            </div>
-        </article>
-    {% endfor %}
-
+{% block favourite %}
+{% if user.is_authenticated %}
+    <div id="fav-section">
+        {% if feed in favs %}
+            <form action="{% url 'fav' feed.id %}" method="POST">
+                {% csrf_token %}
+                <button name="feed_id" value="{{ feed.id }}" type="submit" class="fas fa-heart fa-2x" style="float:right"></button>
+            </form>
+        {% else %}
+            <form action="{% url 'fav' feed.id %}" method="POST">
+                {% csrf_token %}
+                <button name="feed_id" value="{{ feed.id }}" type="submit" class="far fa-heart fa-2x" style="float:right"></button>
+            </form>
+        {% endif %}
+    </div>
+{% endif %}
 {% endblock %}

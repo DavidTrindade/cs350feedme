@@ -1,0 +1,24 @@
+{% extends "blog/base.html" %}
+
+{% block content %}
+
+<h1>{% block title %}{% endblock %}</h1>
+
+{% block additional %}{% endblock%}
+
+{% for feed in feeds %}
+<article class="media content-section">
+    <div class="media-body">
+        <div class="article-metadata">
+            <a class="mr-2" href="{{ feed.link }}">{{ feed.link }}</a>
+        </div>
+        <div id="title-section">
+            {% block favourite %}{% endblock %}
+            <h2><a class="article-title" href="{% url 'feed' feed.id %}">{{ feed.title }}</a></h2>
+        </div>
+        <p class="article-content">{{ feed.desc }}</p>
+    </div>
+</article>
+{% endfor %}
+
+{% endblock %}

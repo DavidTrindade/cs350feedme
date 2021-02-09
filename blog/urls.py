@@ -6,5 +6,6 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('about/', views.about, name='about'),
     path('favourites/', views.faves, name='faves'),
-    path('favourite/<int:id>', views.fav , name="fav"),
+    path('favourite/<int:id>', views.fav, name="fav"),
+    path('feed/<int:id>', views.feed, name="feed"),
 ]

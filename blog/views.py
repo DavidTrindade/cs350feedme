@@ -46,3 +46,13 @@ def fav(request, id):
         feed.favourite.add(request.user)
 
     return redirect(request.META.get('HTTP_REFERER', 'redirect_if_referer_not_found'))
+
+def feed(request, id):
+    feed = get_object_or_404(Feed, id=id)
+    articles = feed.article_set.all()
+    context = {
+        'title': feed.title,
+        'articles': articles
+    }
+
+    return render(request, 'blog/feed.html', context)

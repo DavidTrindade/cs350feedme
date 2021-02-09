@@ -16,3 +16,6 @@ class Article(models.Model):
     link = models.CharField(max_length=2000)
     title = models.TextField()
     desc = models.TextField()
+
+    def __str__(self):
+        return self.title
