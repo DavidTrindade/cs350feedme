@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from .models import Feed
+from .forms import FaveForm
 
 
 def home(request):
@@ -21,9 +22,18 @@ def about(request):
 
 def faves(request):
 
+    if request.method == 'POST':
+        form = FaveForm(request.POST)
+        if form.is_valid():
+            feed = form.save()
+            request.user.feeds.add(feed)
+    else:
+        form = FaveForm()
+
     context = {
         'feeds': Feed.objects.filter(favourite=request.user),
-        'title': "Favourites"
+        'title': "Favourites",
+        'form': form
     }
 
     return render(request, 'blog/favourites.html', context)

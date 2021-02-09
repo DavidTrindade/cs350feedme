@@ -1,8 +1,22 @@
 {% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
 
 {% block content %}
 
     <h1>Favourties Page</h1>
+
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Add Feed to Favourites</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Add</button>
+            </div>
+        </form>
+    </div>
 
     {% for feed in feeds %}
     <article class="media content-section">
