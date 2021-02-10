@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Feed(models.Model):
-    feed_link = models.CharField(max_length=2000, blank=True)
+    feed_link = models.CharField(max_length=2000)
     link = models.CharField(max_length=2000)
     title = models.TextField()
     desc = models.TextField()
