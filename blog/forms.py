@@ -2,7 +2,7 @@ from django import forms
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 from urllib.error import URLError
-from .models import Feed
+from .models import Feed, Article
 import feedparser as fp
 
 class FaveForm(forms.ModelForm):
@@ -38,4 +38,8 @@ class FaveForm(forms.ModelForm):
         feed.link = f.feed.link
         if commit:
             feed.save()
+            feed.article_set.bulk_create([
+                Article(feed=feed, link=entry.link, title=entry.title, desc=entry.summary)
+                for entry in f.entries
+            ])
         return feed
