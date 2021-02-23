@@ -2,3 +2,5 @@
 .vscode/
 
 *.sqlite3
+
+blog/templates/blog/graph.html

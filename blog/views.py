@@ -1,9 +1,11 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, get_list_or_404, redirect
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy, reverse
 from .models import Feed
 from .forms import FaveForm
-
+from pathlib import Path
+import numpy as np
+import pandas as pd
 
 def home(request):
 
@@ -49,10 +51,36 @@ def fav(request, id):
 
 def feed(request, id):
     feed = get_object_or_404(Feed, id=id)
-    articles = feed.article_set.all()
+    # articles = feed.article_set.all()
+
+    df = pd.read_csv(Path("../../dataframes")/"df_import.csv")
+
+    with open(Path("../../")/"dist_mat.npy", 'rb') as f:
+        dist_mat = np.load(f)
+
+    indices = recommend(df, id, dist_mat)
+
+    recommended = get_list_or_404(Feed, id__in=indices)
+    recommended.sort(key=lambda feed: indices.index(feed.id))
+
     context = {
         'title': feed.title,
-        'articles': articles
+        # 'articles': articles,
+        'feeds': recommended,
+        'link': feed.link
     }
 
     return render(request, 'blog/feed.html', context)
+
+def graph(request):
+    return render(request, 'blog/graph.html', {'title': "Graph"})
+
+
+def recommend(df, idx, dist_mat, title=""):
+    if title != "":
+        idx = df['title'][df['title'] == title].index[0]
+    score_series = pd.Series(dist_mat[idx]).sort_values()
+    top_10_indices = list(score_series.iloc[1:11].index)
+
+    return top_10_indices
+

@@ -16,7 +16,7 @@
             {% block favourite %}{% endblock %}
             <h2><a class="article-title" href="{% url 'feed' feed.id %}">{{ feed.title }}</a></h2>
         </div>
-        <p class="article-content">{{ feed.desc }}</p>
+        <p class="article-content">{{ feed.desc|safe }}</p>
     </div>
 </article>
 {% endfor %}

@@ -1,20 +1,8 @@
-{% extends "blog/base.html" %}
+{% extends "blog/display_feed.html" %}
 
-{% block content %}
+{% block title %}{{ title }}{% endblock %}
 
-<h1>{{title}}</h1>
-
-{% for article in articles %}
-<article class="media content-section">
-    <div class="media-body">
-        <div class="article-metadata">
-            <a class="mr-2" href="{{ article.link }}">{{ article.link }}</a>
-        </div>
-        <div id="title-section">
-            <h2>{{ article.title }}</h2>
-        </div>
-        <div class="article-content">{{ article.desc|safe }}</div>
-    </div>
-</article>
-{% endfor %}
+{% block additional %}
+<a class="mr-2" href="{{ link }}">{{ link }}</a>
+<h2>Recommended:</h2>
 {% endblock %}
