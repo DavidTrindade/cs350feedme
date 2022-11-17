@@ -4,3 +4,5 @@
 *.sqlite3
 
 blog/templates/blog/graph.html
+
+django_project/settings.py
