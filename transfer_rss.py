@@ -50,7 +50,7 @@ def main():
             try:
                 num_feeds = int(num_feeds)
             except ValueError:
-                print("Not a valid number")
+                print("Please enter a number or leave blank.")
                 continue
         break
     
